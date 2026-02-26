@@ -7,10 +7,10 @@ app = FastAPI(title="Compliance Auditing API")
 # Add CORS middleware to allow requests from the Next.js frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins for development, adjust for production
+    allow_origins=["http://localhost:3000", "https://readily-wine.vercel.app"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(api_router, prefix="/api")
