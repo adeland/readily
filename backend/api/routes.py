@@ -125,7 +125,18 @@ async def process_single_question(question: str):
             matched_chunks = await asyncio.to_thread(
                 match_policy_chunks, embedding=question_embedding, match_count=5, match_threshold=0.6
             )
-            policy_texts = [chunk["chunk_text"] for chunk in matched_chunks]
+            
+            policy_texts = []
+            for chunk in matched_chunks:
+                # The policy_name is stored in the policy_chunks table
+                policy_name = chunk.get("policy_name", "Unknown Policy")
+                
+                # Strip .pdf and anything after the first underscore (e.g., GG.1655_CEO20240924_v20240901.pdf -> GG.1655)
+                stripped_name = policy_name.replace(".pdf", "").split("_")[0]
+                
+                # Prepend the stripped policy name to the chunk text
+                policy_texts.append(f"[Policy: {stripped_name}]\n{chunk.get('chunk_text', '')}")
+                
             if not policy_texts:
                  policy_texts = ["No relevant policy sections found."]
             

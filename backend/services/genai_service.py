@@ -93,9 +93,11 @@ def evaluate_question(question: str, policy_chunks: List[str]) -> dict:
     Extract the precise evidence or reason for your decision.
     If the policy does not contain enough information to determine, mark it as 'Not Met' and state that there is no evidence.
     
+    IMPORTANT: You must include the relevant policy name (provided in brackets like [Policy: NAME] before each excerpt) in your final evidence statement, so we know exactly where it is stated.
+    
     Audit Requirement / Question: {question}
     
-    Policy Excerpts:
+    Policy Excerpts (each starts with its source policy name):
     {context}
     """
     
